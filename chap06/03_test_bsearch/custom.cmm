@@ -1,0 +1,21 @@
+// SPDX-License-Identifier: GPL-2.0+
+// Copyright (c) 2025 YOUNGJIN JOO (neoelec@gmail.com)
+
+B::
+ON ERROR DO &G_RCN_Path/error.cmm
+
+PRIVATE &E_Func &E_Args
+ENTRY &E_Func %LINE &E_Args
+PRIVATE &ret
+
+GOSUB &E_Func &E_Args
+ENTRY %LINE &ret
+
+ENDDO &ret
+
+on_main:
+(
+  // Go.direct
+
+  END // NOTE: not ENDDO when cmm is called by a break point
+)
