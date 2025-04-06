@@ -34,7 +34,7 @@ static void dbll_print_entry(struct dbll_node *node, void *private)
 int main(void)
 {
     size_t i;
-    struct dbll_node __list, *list = &__list;
+    struct dbll __list, *list = &__list;
     struct dbll_node *node;
     struct dbll_entry *entry;
 

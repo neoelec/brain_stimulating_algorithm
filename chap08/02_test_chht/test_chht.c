@@ -97,7 +97,7 @@ static void chht_destroy_table(struct chht *table)
             struct chht_entry *entry;
 
             entry = container_of(head->next, struct chht_entry, node);
-            dbll_unlink(head->next);
+            dbll_node_unlink(head->next);
             free(entry);
         }
     }

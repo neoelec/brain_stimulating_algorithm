@@ -34,7 +34,7 @@ static void sgll_print_entry(struct sgll_node *node, void *private)
 int main(void)
 {
     size_t i;
-    struct sgll_node __list, *list = &__list;
+    struct sgll __list, *list = &__list;
     struct sgll_node *node;
     struct sgll_entry *entry;
 
@@ -47,10 +47,10 @@ int main(void)
     }
 
     entry = sgll_create_entry(-1);
-    sgll_link_next(list, &entry->node);
+    sgll_insert_head(list, &entry->node);
 
     entry = sgll_create_entry(-2);
-    sgll_link_next(list, &entry->node);
+    sgll_insert_head(list, &entry->node);
 
     /* 리스트 출력 */
     i = 0;
@@ -78,6 +78,7 @@ int main(void)
     while (!sgll_is_empty(list)) {
         sgll_remove_head(list, &node);
         free(container_of(node, struct sgll_entry, node));
+        sgll_remove_tail(list, &node);
     }
 
     return 0;

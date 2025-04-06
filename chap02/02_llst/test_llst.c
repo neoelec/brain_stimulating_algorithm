@@ -3,14 +3,14 @@
 
 #include <rcn/llst.h>
 
-struct llst_entry {
+struct sgll_entry {
     struct sgll_node node;
     const char *data;
 };
 
-static void llst_push_entry(struct llst *stack, const char *data)
+static void llst_push_entry(struct sgll *stack, const char *data)
 {
-    struct llst_entry *entry;
+    struct sgll_entry *entry;
 
     entry = malloc(sizeof(*entry));
     if (entry == NULL) {
@@ -22,10 +22,10 @@ static void llst_push_entry(struct llst *stack, const char *data)
     llst_push(stack, &entry->node);
 }
 
-static const char *llst_pop_entry(struct llst *stack)
+static const char *llst_pop_entry(struct sgll *stack)
 {
     struct sgll_node *node;
-    struct llst_entry *entry;
+    struct sgll_entry *entry;
     const char *data;
     int err;
 
@@ -35,17 +35,17 @@ static const char *llst_pop_entry(struct llst *stack)
         return "NiL";
     }
 
-    entry = container_of(node, struct llst_entry, node);
+    entry = container_of(node, struct sgll_entry, node);
     data = entry->data;
     free(entry);
 
     return data;
 }
 
-static const char *llst_top_entry(struct llst *stack)
+static const char *llst_top_entry(struct sgll *stack)
 {
     struct sgll_node *node;
-    struct llst_entry *entry;
+    struct sgll_entry *entry;
     int err;
 
     err = llst_top(stack, &node);
@@ -54,14 +54,14 @@ static const char *llst_top_entry(struct llst *stack)
         return "NiL";
     }
 
-    entry = container_of(node, struct llst_entry, node);
+    entry = container_of(node, struct sgll_entry, node);
 
     return entry->data;
 }
 
-static struct llst *llst_create_stack(void)
+static struct sgll *llst_create_stack(void)
 {
-    struct llst *stack;
+    struct sgll *stack;
 
     stack = malloc(sizeof(*stack));
     if (stack == NULL) {
@@ -74,7 +74,7 @@ static struct llst *llst_create_stack(void)
     return stack;
 }
 
-static void llst_destroy_stack(struct llst *stack)
+static void llst_destroy_stack(struct sgll *stack)
 {
     while (!llst_is_empty(stack))
         llst_pop_entry(stack);
@@ -85,7 +85,7 @@ static void llst_destroy_stack(struct llst *stack)
 int main(void)
 {
     size_t count;
-    struct llst *stack;
+    struct sgll *stack;
 
     stack = llst_create_stack();
 

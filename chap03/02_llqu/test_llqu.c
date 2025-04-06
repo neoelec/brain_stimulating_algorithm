@@ -3,14 +3,14 @@
 
 #include <rcn/llqu.h>
 
-struct llqu_entry {
+struct dbll_entry {
     struct dbll_node node;
     const char *data;
 };
 
-static void llqu_enqueue_entry(struct llqu *queue, const char *data)
+static void llqu_enqueue_entry(struct dbll *queue, const char *data)
 {
-    struct llqu_entry *entry;
+    struct dbll_entry *entry;
 
     entry = malloc(sizeof(*entry));
     if (entry == NULL) {
@@ -22,10 +22,10 @@ static void llqu_enqueue_entry(struct llqu *queue, const char *data)
     llqu_enqueue(queue, &entry->node);
 }
 
-static const char *llqu_dequeue_entry(struct llqu *queue)
+static const char *llqu_dequeue_entry(struct dbll *queue)
 {
     struct dbll_node *node;
-    struct llqu_entry *entry;
+    struct dbll_entry *entry;
     const char *data;
     int err;
 
@@ -35,16 +35,16 @@ static const char *llqu_dequeue_entry(struct llqu *queue)
         return "NiL";
     }
 
-    entry = container_of(node, struct llqu_entry, node);
+    entry = container_of(node, struct dbll_entry, node);
     data = entry->data;
     free(entry);
 
     return data;
 }
 
-static struct llqu *llqu_create_queue(void)
+static struct dbll *llqu_create_queue(void)
 {
-    struct llqu *queue;
+    struct dbll *queue;
 
     queue = malloc(sizeof(*queue));
     if (queue == NULL) {
@@ -57,7 +57,7 @@ static struct llqu *llqu_create_queue(void)
     return queue;
 }
 
-static void llqu_destroy_queue(struct llqu *queue)
+static void llqu_destroy_queue(struct dbll *queue)
 {
     while (!llqu_is_empty(queue))
         llqu_dequeue_entry(queue);
@@ -67,7 +67,7 @@ static void llqu_destroy_queue(struct llqu *queue)
 
 int main(void)
 {
-    struct llqu *queue;
+    struct dbll *queue;
 
     queue = llqu_create_queue();
 
